@@ -502,6 +502,9 @@ func (c *connection) writeCommand(cmd *pb.BaseCommand) {
 		panic("Protobuf serialization error")
 	}
 
+	// log the command before sending to broker, it will be helpful for debugging in case of issues
+	c.log.Debugf("Writing command: %v", cmd)
+
 	c.writeBuffer.WrittenBytes(cmdSize)
 	c.internalWriteData(c.writeBuffer)
 }
